@@ -3,55 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI 맞춤형 학습 플래너</title>
-    <!-- 구글 폰트 (Pretendard 스타일 & Noto Sans KR) -->
+    <title>AI STUDY PLANNER ✦ 레트로 빈티지 학습 플래너</title>
+    <!-- 구글 폰트: 레트로 굵은 폰트(Black Han Sans, Bungee) & 본문용 폰트 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Bungee&family=Gaegu:wght@700&family=Noto+Sans+KR:wght@400;600;700;900&display=swap" rel="stylesheet">
     <!-- 마크다운 파서 (marked.js) -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <!-- 커스텀 스타일시트 -->
+    <!-- 빈티지 포스터 스타일시트 -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
-<body>
+<body class="vintage-poster-theme">
+    <!-- 레트로 배경 장식 스티커들 -->
+    <div class="bg-sticker sticker-star-1">✦</div>
+    <div class="bg-sticker sticker-star-2">★</div>
+    <div class="bg-sticker sticker-star-3">✷</div>
+    <div class="bg-sticker sticker-star-4">✱</div>
+    <div class="bg-sticker sticker-star-5">✦</div>
+    <div class="bg-sticker sticker-star-6">★</div>
+
     <div class="app-container">
-        <!-- 헤더 영역 -->
-        <header class="app-header">
-            <div class="header-badge">🚀 AI Powered Study Assistant</div>
-            <h1>AI 맞춤형 학습 플래너</h1>
-            <p class="subtitle">학습자의 목표와 환경에 맞춘 최적의 주간·일일 계획과 망각 방지 복습 루틴을 설계해 드립니다.</p>
+        <!-- 레트로 팝 헤더 포스터 영역 -->
+        <header class="retro-header">
+            <div class="tape-strip tape-center"></div>
+            <div class="header-badge-sticker">
+                <span class="sparkle">✦</span> VINTAGE STUDY CLUB <span class="sparkle">✦</span>
+            </div>
+            
+            <!-- 포스터 스타일 대형 타이틀 -->
+            <div class="title-poster-wrapper">
+                <div class="floating-sticker sticker-phone">☎️</div>
+                <div class="floating-sticker sticker-speaker">📢</div>
+                <div class="floating-sticker sticker-disco">🪩</div>
+                <h1 class="poster-title-main">
+                    <span class="title-sub-pop">WHO'S READY FOR</span>
+                    <span class="title-highlight-yellow">AI STUDY</span>
+                    <span class="title-highlight-pink">PLANNER!</span>
+                </h1>
+            </div>
+            
+            <p class="retro-subtitle">
+                <span class="tag-label">#망각방지</span>
+                <span class="tag-label">#초개인화</span>
+                <span class="tag-label">#합격루틴</span>
+                목표와 시험일을 입력하면 AI가 빈티지 감성의 나만의 완벽한 합격 플랜을 발행합니다!
+            </p>
         </header>
 
-        <!-- 메인 콘텐츠 영역 (2컬럼 레이아웃) -->
+        <!-- 메인 콘텐츠 영역 (2컬럼 콜라주 레이아웃) -->
         <main class="main-layout">
-            <!-- 왼쪽: 입력 폼 섹션 -->
-            <section class="card form-card">
+            <!-- 왼쪽: 레트로 페이퍼 입력 폼 섹션 -->
+            <section class="card form-card retro-paper">
+                <div class="tape-strip tape-top-left"></div>
+                <div class="tape-strip tape-top-right"></div>
+                
                 <div class="card-header">
-                    <h2>📝 학습 정보 입력</h2>
-                    <span class="card-desc">아래 항목을 작성하시면 AI가 정밀 분석을 시작합니다.</span>
+                    <div class="badge-tag">STEP 01</div>
+                    <h2>📋 학습 프로필 신청서</h2>
+                    <span class="card-desc">아래 항목을 작성하시면 맞춤 플랜이 생성됩니다.</span>
                 </div>
 
                 <form id="plannerForm" novalidate>
                     <!-- 1. 학습 목표 -->
                     <div class="form-group">
-                        <label for="goal">1. 학습 목표 / 시험명 <span class="required">*</span></label>
-                        <input type="text" id="goal" name="goal" placeholder="예: 정보처리기사 실기, 토익 850점, 파이썬 기초 완강" required>
-                        <small class="helper-text">준비하시는 시험이나 달성하고 싶은 구체적인 목표를 적어주세요.</small>
+                        <label for="goal">🎯 1. 학습 목표 / 시험명 <span class="required">*</span></label>
+                        <input type="text" id="goal" name="goal" placeholder="예: 정보처리기사 실기, 토익 850점, 파이썬 기초" required>
+                        <small class="helper-text">도전하실 시험이나 마스터하고 싶은 목표를 적어주세요.</small>
                     </div>
 
                     <!-- 2. 목표 시험일 / 완료일 -->
                     <div class="form-group">
-                        <label for="examDate">2. 목표 시험일 / 마감일 <span class="required">*</span></label>
+                        <label for="examDate">📅 2. 목표 시험일 / 마감일 <span class="required">*</span></label>
                         <input type="date" id="examDate" name="exam_date" required>
-                        <small class="helper-text">언제까지 완주할 계획인지 날짜를 지정해 주세요.</small>
+                        <small class="helper-text">디데이(D-Day)를 향해 달릴 마감일을 선택해 주세요.</small>
                     </div>
 
                     <!-- 3. 현재 수준 -->
                     <div class="form-group">
-                        <label for="currentLevel">3. 현재 수준 <span class="required">*</span></label>
+                        <label for="currentLevel">📊 3. 현재 학습자 수준 <span class="required">*</span></label>
                         <select id="currentLevel" name="current_level" required>
-                            <option value="">선택해 주세요</option>
-                            <option value="완전 입문자 (노베이스)">완전 입문자 (노베이스, 기초 개념부터 필요)</option>
+                            <option value="">선택해 주세요 ▾</option>
+                            <option value="완전 입문자 (노베이스)">완전 입문자 (노베이스, 기초 개념부터 시작)</option>
                             <option value="초보자 (기본 개념 1회독 경험 있음)">초보자 (기본 개념 1회독 경험 있음)</option>
                             <option value="중급자 (기출문제 풀이 단계)">중급자 (기출문제 풀이 단계)</option>
                             <option value="숙련자 (고득점 마무리 및 약점 보완)">숙련자 (고득점 마무리 및 약점 보완)</option>
@@ -60,69 +92,78 @@
 
                     <!-- 4. 하루 가능 시간 -->
                     <div class="form-group">
-                        <label for="dailyTime">4. 하루 공부 가능 시간 <span class="required">*</span></label>
+                        <label for="dailyTime">⏰ 4. 하루 공부 가능 시간 <span class="required">*</span></label>
                         <input type="text" id="dailyTime" name="daily_time" placeholder="예: 평일 2시간, 주말 5시간 (또는 매일 3시간)" required>
-                        <small class="helper-text">현실적으로 집중해서 투자할 수 있는 시간을 적어주세요.</small>
+                        <small class="helper-text">스마트폰을 끄고 순수 집중할 수 있는 시간입니다.</small>
                     </div>
 
                     <!-- 5. 집중 보완 취약 영역 -->
                     <div class="form-group">
-                        <label for="weakness">5. 집중 보완 취약 영역 (선택)</label>
-                        <input type="text" id="weakness" name="weakness" placeholder="예: 기출 계산 문제, 영단어 암기, 프로그래밍 알고리즘">
-                        <small class="helper-text">특별히 어려움을 느끼는 파트가 있다면 입력해 주세요.</small>
+                        <label for="weakness">🥊 5. 집중 보완 취약 파트 (선택)</label>
+                        <input type="text" id="weakness" name="weakness" placeholder="예: 기출 계산 공식, 영단어 암기, 알고리즘 구현">
+                        <small class="helper-text">자꾸 틀리거나 발목을 잡는 영역을 알려주세요.</small>
                     </div>
 
                     <!-- 6. 선호 학습 방식 -->
                     <div class="form-group">
-                        <label for="preferredStyle">6. 선호하는 학습 방식 (선택)</label>
+                        <label for="preferredStyle">💡 6. 선호 학습 스타일 (선택)</label>
                         <select id="preferredStyle" name="preferred_style">
-                            <option value="개념 정리 40% + 실전 문제풀이 60% 균형 학습">균형 학습 (개념 정리 40% + 실전 문제풀이 60%)</option>
-                            <option value="핵심 요약 속성 암기 위주">속성 암기형 (요약 노트 및 핵심 공식 위주)</option>
-                            <option value="기출문제 중심 역방향 학습">문제 중심형 (최신 기출문제를 먼저 풀며 개념 역추적)</option>
-                            <option value="원리 이해와 백지 복습 중심">원리 이해형 (철저한 개념 이해 및 셀프 백지 복습)</option>
+                            <option value="개념 정리 40% + 실전 문제풀이 60% 균형 학습">⚖️ 황금 밸런스형 (개념 40% + 문제풀이 60%)</option>
+                            <option value="핵심 요약 속성 암기 위주">⚡ 벼락치기 속성형 (요약 노트 & 공식 암기 위주)</option>
+                            <option value="기출문제 중심 역방향 학습">🎯 실전 기출형 (기출문제를 먼저 풀며 개념 역추적)</option>
+                            <option value="원리 이해와 백지 복습 중심">🧠 백지 복습 원리형 (원리 철저 이해 & 셀프 백지 복습)</option>
                         </select>
                     </div>
 
                     <!-- 7. 웹검색 연동 옵션 (Serper.dev) -->
-                    <div class="form-group checkbox-group">
+                    <div class="form-group checkbox-group retro-search-box">
                         <label class="checkbox-container">
                             <input type="checkbox" id="useWebSearch" name="use_web_search">
                             <span class="custom-checkmark"></span>
                             <span class="checkbox-label">
-                                <strong>최신 시험 범위 및 출제 트렌드 웹검색 연동</strong>
-                                <small>Serper.dev API를 통해 인터넷 최신 수험 정보를 분석하여 반영합니다.</small>
+                                <strong>🌐 최신 시험 출제 트렌드 실시간 웹탐색 (Serper)</strong>
+                                <small>인터넷 최신 출제 경향과 핵심 족보를 검색하여 플랜에 반영합니다.</small>
                             </span>
                         </label>
                     </div>
 
-                    <!-- 제출 버튼 -->
-                    <button type="submit" id="submitBtn" class="primary-btn">
-                        <span class="btn-text">✨ AI 맞춤형 학습 플랜 생성하기</span>
+                    <!-- 제출 버튼 (레트로 3D 팝 버튼) -->
+                    <button type="submit" id="submitBtn" class="primary-btn retro-pop-btn">
+                        <span class="btn-text">🔥 AI 맞춤형 학습 플랜 생성하기!</span>
                         <span class="btn-spinner hidden"></span>
                     </button>
                 </form>
 
                 <!-- 에러 알림창 -->
-                <div id="alertBox" class="alert-box hidden" role="alert">
+                <div id="alertBox" class="alert-box retro-alert hidden" role="alert">
                     <span class="alert-icon">⚠️</span>
                     <span id="alertMessage" class="alert-message"></span>
                 </div>
             </section>
 
-            <!-- 오른쪽: 생성 결과 출력 섹션 -->
-            <section class="card result-card">
+            <!-- 오른쪽: 생성 결과 출력 섹션 (콜라주 포스터 스타일) -->
+            <section class="card result-card retro-paper">
+                <div class="tape-strip tape-top-right"></div>
+                
                 <!-- 결과 안내 기본 상태 (플레이스홀더) -->
                 <div id="emptyState" class="empty-state">
-                    <div class="empty-icon">📋</div>
-                    <h3>아직 생성된 플랜이 없습니다</h3>
-                    <p>왼쪽 폼에 학습 조건을 입력하시고<br><strong>[AI 맞춤형 학습 플랜 생성하기]</strong> 버튼을 눌러주세요.</p>
+                    <div class="empty-icon-retro">
+                        <span class="retro-icon-emoji">📼</span>
+                    </div>
+                    <h3 class="retro-empty-title">플랜 대기 중...</h3>
+                    <p class="retro-empty-desc">
+                        왼쪽 프로필 신청서를 작성하고<br>
+                        <strong>[🔥 AI 맞춤형 학습 플랜 생성하기]</strong> 버튼을 꾹 눌러주세요!
+                    </p>
                 </div>
 
                 <!-- 로딩 오버레이 상태 -->
                 <div id="loadingState" class="loading-state hidden">
-                    <div class="pulsing-spinner"></div>
-                    <h3>AI가 맞춤형 수험 전략을 설계하고 있습니다</h3>
-                    <p class="loading-subtext">학습자의 수준과 목표일을 바탕으로 6가지 맞춤 솔루션을 생성 중입니다. (약 5~15초 소요)</p>
+                    <div class="retro-spinner-box">
+                        <span class="spinning-star">✶</span>
+                    </div>
+                    <h3 class="retro-loading-title">AI 플래너가 맞춤 전략을 인쇄 중입니다!</h3>
+                    <p class="loading-subtext">최적의 주간·일일 루틴과 망각 방지 복습 주기 작성 중... (약 5~15초)</p>
                 </div>
 
                 <!-- 결과 표시 컨테이너 -->
@@ -130,66 +171,74 @@
                     <!-- 액션 바 (상단 복사 및 다운로드) -->
                     <div class="result-action-bar">
                         <div class="result-title-group">
-                            <h2>🎯 완성된 맞춤형 학습 플랜</h2>
-                            <span id="engineBadge" class="engine-badge">Model</span>
+                            <span class="retro-tag-badge">READY TO WIN</span>
+                            <h2 class="result-heading">🏆 맞춤형 합격 로드맵</h2>
+                            <span id="engineBadge" class="engine-badge retro-badge-engine">Gemini 3.8 Flash</span>
                         </div>
                         <div class="btn-group">
-                            <button id="copyAllBtn" class="action-btn" title="클립보드에 전체 복사">
+                            <button id="copyAllBtn" class="action-btn retro-btn-yellow" title="클립보드에 전체 복사">
                                 <span class="btn-icon">📋</span> 전체 복사
                             </button>
-                            <button id="downloadMdBtn" class="action-btn download-btn" title="Markdown 파일로 저장">
+                            <button id="downloadMdBtn" class="action-btn retro-btn-green" title="Markdown 파일로 저장">
                                 <span class="btn-icon">💾</span> MD 다운로드
                             </button>
                         </div>
                     </div>
 
-                    <!-- 6대 핵심 결과 섹션 렌더링 영역 -->
+                    <!-- 6대 핵심 결과 섹션 렌더링 영역 (스티커 메모지 스타일) -->
                     <div class="plan-sections">
                         <!-- 섹션 1: 주간계획 -->
-                        <div class="plan-card">
-                            <div class="section-badge badge-blue">1. 주간 학습 전략</div>
-                            <h3>📅 주차별 핵심 달성 로드맵</h3>
+                        <div class="plan-card retro-card-blue">
+                            <div class="tape-strip tape-card-left"></div>
+                            <div class="section-badge badge-retro-blue">📅 ROADMAP 01</div>
+                            <h3>주차별 핵심 달성 로드맵</h3>
                             <div id="secWeeklyPlan" class="markdown-body"></div>
                         </div>
 
                         <!-- 섹션 2: 일일계획 -->
-                        <div class="plan-card">
-                            <div class="section-badge badge-indigo">2. 일일 실행 루틴</div>
-                            <h3>⏰ 시간대별 최적 학습 타임테이블</h3>
+                        <div class="plan-card retro-card-yellow">
+                            <div class="tape-strip tape-card-right"></div>
+                            <div class="section-badge badge-retro-yellow">⏰ DAILY ROUTINE 02</div>
+                            <h3>시간대별 1일 집중 실행 루틴</h3>
                             <div id="secDailyPlan" class="markdown-body"></div>
                         </div>
 
                         <!-- 섹션 3: 복습주기 -->
-                        <div class="plan-card">
-                            <div class="section-badge badge-green">3. 망각 방지 매뉴얼</div>
-                            <h3>🔄 에빙하우스 주기별 복습 스케줄</h3>
+                        <div class="plan-card retro-card-pink">
+                            <div class="tape-strip tape-card-left"></div>
+                            <div class="section-badge badge-retro-pink">🔄 REVIEW CYCLE 03</div>
+                            <h3>에빙하우스 망각 방지 복습 매뉴얼</h3>
                             <div id="secReviewCycle" class="markdown-body"></div>
                         </div>
 
                         <!-- 섹션 4: 점검문항 -->
-                        <div class="plan-card">
-                            <div class="section-badge badge-amber">4. 자가 진단 퀴즈</div>
-                            <h3>📝 취약점 확인용 셀프 체크 테스트 & 해설</h3>
+                        <div class="plan-card retro-card-orange">
+                            <div class="tape-strip tape-card-right"></div>
+                            <div class="section-badge badge-retro-orange">📝 POP QUIZ 04</div>
+                            <h3>취약점 자가 진단 퀴즈 & 상세 해설</h3>
                             <div id="secQuizItems" class="markdown-body"></div>
                         </div>
 
                         <!-- 섹션 5: 진도체크 리스트 -->
-                        <div class="plan-card">
-                            <div class="section-badge badge-teal">5. 완주 체크리스트</div>
-                            <h3>✅ 실시간 진도율 체크 (클릭하여 체크)</h3>
+                        <div class="plan-card retro-card-green">
+                            <div class="tape-strip tape-card-center"></div>
+                            <div class="section-badge badge-retro-green">✅ CHECKLIST 05</div>
+                            <h3>실시간 진도율 체크리스트 (클릭 시 반영)</h3>
+                            
                             <div class="progress-bar-container">
-                                <div class="progress-bar-track">
-                                    <div id="progressBarFill" class="progress-bar-fill" style="width: 0%;"></div>
+                                <div class="progress-bar-track retro-track">
+                                    <div id="progressBarFill" class="progress-bar-fill retro-fill" style="width: 0%;"></div>
                                 </div>
-                                <span id="progressText" class="progress-text">0% 완료 (0/0)</span>
+                                <span id="progressText" class="progress-text retro-progress-text">0% 완료 (0/0)</span>
                             </div>
-                            <ul id="checklistContainer" class="interactive-checklist"></ul>
+                            <ul id="checklistContainer" class="interactive-checklist retro-checklist"></ul>
                         </div>
 
                         <!-- 섹션 6: 학습회고 가이드 -->
-                        <div class="plan-card">
-                            <div class="section-badge badge-purple">6. 성장 회고 가이드</div>
-                            <h3>💡 KPT 기반 일일/주간 학습 회고</h3>
+                        <div class="plan-card retro-card-purple">
+                            <div class="tape-strip tape-card-left"></div>
+                            <div class="section-badge badge-retro-purple">💡 KPT RETRO 06</div>
+                            <h3>KPT 기반 일일·주간 성장 회고</h3>
                             <div id="secRetrospective" class="markdown-body"></div>
                         </div>
                     </div>
@@ -198,8 +247,8 @@
         </main>
 
         <!-- 푸터 -->
-        <footer class="app-footer">
-            <p>AI Study Planner &copy; 2026. Made with Flask & Google Gemini API.</p>
+        <footer class="app-footer retro-footer">
+            <p>✦ VINTAGE AI STUDY PLANNER ✦ POWERED BY GEMINI 3.8 FLASH & SERPER.DEV ✦</p>
         </footer>
     </div>
 
