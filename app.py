@@ -115,10 +115,10 @@ def call_gemini_planner(goal, exam_date, current_level, daily_time, weakness, pr
 답변은 반드시 유효한 JSON 형식이어야 합니다.
 """
 
-    # 모델 후보군 (Google API 권장 최신 모델 순차 시도)
+    # 모델 후보군 (최신 고성능 gemini-3.8-flash 1순위 적용)
     candidate_models = [
-        "gemini-3.5-flash-lite",
         "gemini-3.8-flash",
+        "gemini-3.5-flash-lite",
         "gemini-3.5-flash",
         "gemini-flash-latest"
     ]
