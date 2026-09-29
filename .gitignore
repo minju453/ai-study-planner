@@ -13,3 +13,8 @@ __pycache__/
 Thumbs.db
 .vscode/
 .idea/
+
+# 스크린샷 및 로컬 이미지
+*.png
+*.jpg
+*.jpeg
