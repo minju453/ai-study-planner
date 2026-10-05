@@ -17,8 +17,13 @@ logging.basicConfig(
 )
 logger = logging.getLogger("StudyPlanner")
 
-# 3. Flask 앱 초기화
-app = Flask(__name__)
+# 3. Flask 앱 초기화 (서버리스 환경 경로 보장)
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+app = Flask(
+    __name__,
+    template_folder=os.path.join(BASE_DIR, "templates"),
+    static_folder=os.path.join(BASE_DIR, "static")
+)
 
 # 4. API 키 가져오기
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "").strip()
