@@ -138,12 +138,12 @@ def call_gemini_planner(goal, exam_date, current_level, daily_time, weakness, pr
 답변은 반드시 유효한 JSON 형식이어야 합니다.
 """
 
-    # 모델 후보군 (최신 고성능 gemini-3.8-flash 1순위 적용)
+    # 공식 Gemini 지원 모델 후보군 (안정적이고 빠른 gemini-1.5-flash 1순위)
     candidate_models = [
-        "gemini-3.8-flash",
-        "gemini-3.5-flash-lite",
-        "gemini-3.5-flash",
-        "gemini-flash-latest"
+        "gemini-1.5-flash",
+        "gemini-1.5-flash-latest",
+        "gemini-2.0-flash",
+        "gemini-1.5-pro"
     ]
     last_error = None
 
@@ -194,11 +194,13 @@ def call_gemini_planner(goal, exam_date, current_level, daily_time, weakness, pr
     raise RuntimeError(f"모든 Gemini 모델 호출에 실패했습니다: {last_error}")
 
 
-@app.route("/")
-@app.route("/api")
-@app.route("/api/index")
+@app.route("/", methods=["GET", "POST"])
+@app.route("/api", methods=["GET", "POST"])
+@app.route("/api/index", methods=["GET", "POST"])
 def index():
-    """메인 학습 플래너 페이지 렌더링"""
+    """메인 학습 플래너 페이지 렌더링 (POST 요청 시 generate로 자동 연계)"""
+    if request.method == "POST":
+        return generate()
     return render_template("index.html")
 
 

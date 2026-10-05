@@ -117,10 +117,25 @@ document.addEventListener("DOMContentLoaded", () => {
                 body: JSON.stringify(payload)
             });
 
-            const result = await response.json();
+            let result = null;
+            const rawText = await response.text();
+            try {
+                result = JSON.parse(rawText);
+            } catch (jsonErr) {
+                console.warn("[응답 JSON 파싱 실패 - 비정상 응답]", rawText);
+            }
 
-            if (!response.ok || result.status !== "success") {
-                const errMsg = result.message || "학습 플랜을 생성하지 못했습니다. 잠시 후 다시 시도해 주세요.";
+            if (!response.ok || !result || result.status !== "success") {
+                let errMsg = "학습 플랜을 생성하지 못했습니다.";
+                if (result && result.message) {
+                    errMsg = result.message;
+                } else if (response.status === 504) {
+                    errMsg = "AI 답변 생성 시간이 초과되었습니다 (504). 잠시 후 다시 시도해 주세요.";
+                } else if (response.status === 500) {
+                    errMsg = "서버 AI 설정 또는 API 키 연결 오류가 발생했습니다 (500).";
+                } else {
+                    errMsg = `서버 응답 오류 (코드: ${response.status}). 잠시 후 다시 시도해 주세요.`;
+                }
                 showAlert(errMsg);
                 setLoadingState(false, false);
                 return;
@@ -133,7 +148,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         } catch (error) {
             console.error("[네트워크 또는 통신 오류]", error);
-            showAlert("서버와의 통신 중 오류가 발생했습니다. 터미널의 Flask 서버가 켜져 있는지 확인해 주세요.");
+            showAlert("네트워크 연결이 불안정하거나 일시적인 통신 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.");
             setLoadingState(false, false);
         }
     });
