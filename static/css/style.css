@@ -36,6 +36,14 @@
     padding: 0;
 }
 
+html {
+    height: auto;
+    min-height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
 /* ===================================================================
    깅엄 체크 배경
    =================================================================== */
@@ -43,8 +51,12 @@ body.gingham-theme {
     font-family: 'Nunito', 'Noto Sans KR', sans-serif;
     color: var(--ink);
     min-height: 100vh;
+    min-height: 100dvh;
+    height: auto;
     position: relative;
     overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
 
     /* 깅엄 체크 패턴 배경 */
     background-color: #e8f0fb;
@@ -217,8 +229,16 @@ body.gingham-theme {
 }
 
 @media (max-width: 1080px) {
-    .main-layout { grid-template-columns: 1fr; }
+    .main-layout {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
     .title-line-2 { font-size: 2.3rem; }
+    .form-card {
+        position: static !important;
+        top: auto !important;
+        margin-bottom: 1.5rem;
+    }
 }
 
 /* ===================================================================
@@ -231,7 +251,7 @@ body.gingham-theme {
     border: var(--border-soft);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-card);
-    overflow: hidden;
+    overflow: visible;
     position: relative;
     transition: box-shadow 0.2s ease;
 }
@@ -248,7 +268,7 @@ body.gingham-theme {
 
 .result-card {
     padding: 0 0 2rem;
-    min-height: 700px;
+    min-height: 500px;
 }
 
 /* 상단 컬러 바 */
@@ -857,4 +877,64 @@ form {
     color: #7a7a9a;
     letter-spacing: 0.5px;
     border-top: 1.5px dashed rgba(138,180,216,0.4);
+}
+
+/* ===================================================================
+   모바일 전용 최적화 (640px 이하 스마트폰 화면 스크롤 완벽 보장)
+   =================================================================== */
+@media (max-width: 640px) {
+    .app-container {
+        padding: 1.2rem 0.8rem calc(5rem + env(safe-area-inset-bottom, 20px));
+    }
+
+    .gingham-header {
+        padding: 1.4rem 1rem;
+        margin-bottom: 1.2rem;
+    }
+
+    .title-line-1 {
+        font-size: 1.4rem;
+    }
+
+    .title-line-2 {
+        font-size: 2rem;
+    }
+
+    .card-header {
+        padding: 1.2rem 1.2rem 0.8rem;
+    }
+
+    form {
+        padding: 0 1.2rem;
+    }
+
+    /* iOS 사파리에서 입력창 포커스 시 화면 자동 줌(스크롤 꼬임) 방지 (16px 이상) */
+    .form-group input[type="text"],
+    .form-group input[type="date"],
+    .form-group select {
+        font-size: 16px !important;
+        padding: 0.75rem 0.85rem;
+    }
+
+    .submit-btn {
+        margin-top: 1.4rem;
+        padding: 1rem 1.2rem;
+        font-size: 1.05rem;
+        /* 하단 제스처 바에 닿지 않도록 마진 확보 */
+        margin-bottom: 0.5rem;
+    }
+
+    .empty-state,
+    .loading-state {
+        min-height: 360px;
+        padding: 1.5rem 1rem;
+    }
+
+    .result-content {
+        padding: 0 1.2rem 1.5rem;
+    }
+
+    .plan-section-card {
+        padding: 1.2rem;
+    }
 }
