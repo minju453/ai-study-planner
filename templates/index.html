@@ -19,11 +19,11 @@
     <meta name="theme-color" content="#8ab4d8">
     <link rel="apple-touch-icon" href="{{ url_for('static', filename='icons/icon-192.png') }}">
 
-    <!-- 서비스워커 등록 -->
+    <!-- 서비스워커 등록 (scope: / 로 루트 전체 커버) -->
     <script>
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/static/sw.js')
+          navigator.serviceWorker.register('/static/sw.js', { scope: '/' })
             .then(reg => console.log('SW 등록 완료:', reg.scope))
             .catch(err => console.log('SW 등록 실패:', err));
         });

@@ -2,11 +2,56 @@
   "version": 2,
   "builds": [
     {
+      "src": "static/**",
+      "use": "@vercel/static"
+    },
+    {
       "src": "app.py",
-      "use": "@vercel/python"
+      "use": "@vercel/python",
+      "config": {
+        "runtime": "python3.12"
+      }
     }
   ],
   "routes": [
+    {
+      "src": "/static/css/style\\.css",
+      "dest": "/static/css/style.css",
+      "headers": {
+        "Content-Type": "text/css; charset=utf-8",
+        "Cache-Control": "public, max-age=86400"
+      }
+    },
+    {
+      "src": "/static/js/app\\.js",
+      "dest": "/static/js/app.js",
+      "headers": {
+        "Content-Type": "application/javascript; charset=utf-8",
+        "Cache-Control": "public, max-age=86400"
+      }
+    },
+    {
+      "src": "/static/manifest\\.json",
+      "dest": "/static/manifest.json",
+      "headers": {
+        "Content-Type": "application/manifest+json; charset=utf-8"
+      }
+    },
+    {
+      "src": "/static/sw\\.js",
+      "dest": "/static/sw.js",
+      "headers": {
+        "Content-Type": "application/javascript; charset=utf-8",
+        "Service-Worker-Allowed": "/"
+      }
+    },
+    {
+      "src": "/static/icons/(.*)",
+      "dest": "/static/icons/$1",
+      "headers": {
+        "Cache-Control": "public, max-age=31536000, immutable"
+      }
+    },
     {
       "src": "/static/(.*)",
       "dest": "/static/$1"
