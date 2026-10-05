@@ -197,14 +197,18 @@ def generate():
 
         logger.info(f"[요청 수신] 목표: '{goal}', 시험일: '{exam_date}', 수준: '{current_level}', 가능시간: '{daily_time}'")
 
-        if not goal:
-            return jsonify({"status": "error", "message": "학습 목표 또는 시험명을 입력해 주세요."}), 400
-        if not exam_date:
-            return jsonify({"status": "error", "message": "목표 시험일 또는 완료일을 지정해 주세요."}), 400
-        if not current_level:
-            return jsonify({"status": "error", "message": "현재 학습 수준(초보/중급/기초 등)을 입력해 주세요."}), 400
-        if not daily_time:
-            return jsonify({"status": "error", "message": "하루에 공부할 수 있는 시간(예: 2시간)을 입력해 주세요."}), 400
+        if not goal or len(goal) > 100:
+            return jsonify({"status": "error", "message": "학습 목표를 1~100자 사이로 입력해 주세요."}), 400
+        if not exam_date or len(exam_date) > 50:
+            return jsonify({"status": "error", "message": "목표 시험일 또는 완료일을 올바르게 지정해 주세요."}), 400
+        if not current_level or len(current_level) > 100:
+            return jsonify({"status": "error", "message": "현재 학습 수준을 올바르게 선택해 주세요."}), 400
+        if not daily_time or len(daily_time) > 100:
+            return jsonify({"status": "error", "message": "하루 공부 가능 시간을 100자 이내로 입력해 주세요."}), 400
+        if len(weakness) > 200:
+            return jsonify({"status": "error", "message": "취약 파트 내용은 200자 이내로 입력해 주세요."}), 400
+        if len(preferred_style) > 100:
+            return jsonify({"status": "error", "message": "학습 스타일 내용은 100자 이내로 입력해 주세요."}), 400
 
         # API Key 유효성 체크
         current_api_key = os.getenv("GEMINI_API_KEY", "").strip()
@@ -212,8 +216,8 @@ def generate():
             logger.error("[설정 오류] GEMINI_API_KEY 미설정")
             return jsonify({
                 "status": "error",
-                "message": ".env 파일에 유효한 GEMINI_API_KEY가 입력되지 않았습니다. .env 파일을 열어 키를 입력해 주세요."
-            }), 400
+                "message": "서버에 GEMINI_API_KEY 환경변수가 설정되지 않았습니다. 관리자 설정을 확인해 주세요."
+            }), 500
 
         # genai 최신 키 동기화
         genai.configure(api_key=current_api_key)
@@ -286,11 +290,12 @@ def generate():
         logger.error(f"[서버 에러] 플랜 생성 중 오류 발생: {str(e)}", exc_info=True)
         return jsonify({
             "status": "error",
-            "message": f"학습 플랜을 생성하는 중 오류가 발생했습니다: {str(e)}"
+            "message": "학습 플랜을 생성하는 중 일시적인 오류가 발생했습니다. 잠시 후 다시 시도해 주세요."
         }), 500
 
 
 if __name__ == "__main__":
+    is_debug = os.getenv("FLASK_DEBUG", "false").lower() in ("true", "1", "yes")
     logger.info("=== AI 학습 플래너 웹앱 서버를 시작합니다 ===")
     logger.info("접속 주소: http://127.0.0.1:5000")
-    app.run(host="127.0.0.1", port=5000, debug=True)
+    app.run(host="127.0.0.1", port=5000, debug=is_debug)
