@@ -25,6 +25,24 @@ app = Flask(
     static_folder=os.path.join(BASE_DIR, "static")
 )
 
+# Vercel Serverless PATH_INFO 정규화 미들웨어
+class VercelPathMiddleware:
+    def __init__(self, wsgi_app):
+        self.wsgi_app = wsgi_app
+
+    def __call__(self, environ, start_response):
+        path = environ.get("PATH_INFO", "")
+        for prefix in ("/api/index", "/api"):
+            if path == prefix:
+                environ["PATH_INFO"] = "/"
+                break
+            elif path.startswith(prefix + "/"):
+                environ["PATH_INFO"] = path[len(prefix):]
+                break
+        return self.wsgi_app(environ, start_response)
+
+app.wsgi_app = VercelPathMiddleware(app.wsgi_app)
+
 # 4. API 키 가져오기
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "").strip()
 SERPER_API_KEY = os.getenv("SERPER_API_KEY", "").strip()
@@ -177,12 +195,16 @@ def call_gemini_planner(goal, exam_date, current_level, daily_time, weakness, pr
 
 
 @app.route("/")
+@app.route("/api")
+@app.route("/api/index")
 def index():
     """메인 학습 플래너 페이지 렌더링"""
     return render_template("index.html")
 
 
 @app.route("/generate", methods=["POST"])
+@app.route("/api/generate", methods=["POST"])
+@app.route("/api/index/generate", methods=["POST"])
 def generate():
     """학습 계획 생성 API 엔드포인트"""
     try:
