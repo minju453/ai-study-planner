@@ -717,7 +717,7 @@ form {
     font-weight: 600;
     line-height: 1.85;
     color: var(--ink-soft);
-    white-space: pre-line;
+    white-space: pre-wrap; /* \n 줄바꿈을 화면에 줄바꿈으로 렌더링 */
     word-break: keep-all;
 }
 
