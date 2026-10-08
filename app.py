@@ -138,12 +138,12 @@ def call_gemini_planner(goal, exam_date, current_level, daily_time, weakness, pr
 답변은 반드시 유효한 JSON 형식이어야 합니다.
 """
 
-    # 공식 Gemini 지원 모델 후보군 (안정적이고 빠른 gemini-1.5-flash 1순위)
+    # 최신 Google Gemini 3.8 Flash 및 지원 모델군
     candidate_models = [
-        "gemini-1.5-flash",
-        "gemini-1.5-flash-latest",
-        "gemini-2.0-flash",
-        "gemini-1.5-pro"
+        "gemini-3.8-flash",
+        "gemini-3.5-flash",
+        "gemini-flash-latest",
+        "gemini-2.5-flash"
     ]
     last_error = None
 
@@ -156,7 +156,7 @@ def call_gemini_planner(goal, exam_date, current_level, daily_time, weakness, pr
             )
             response = model.generate_content(
                 prompt,
-                generation_config={"temperature": 0.7, "max_output_tokens": 4096}
+                generation_config={"temperature": 0.7, "max_output_tokens": 3000}
             )
 
             response_text = response.text.strip()
