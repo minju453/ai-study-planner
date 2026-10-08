@@ -713,10 +713,12 @@ form {
    마크다운 렌더링
    =================================================================== */
 .markdown-body {
-    font-size: 0.96rem;
+    font-size: 0.98rem;
     font-weight: 600;
-    line-height: 1.8;
+    line-height: 1.85;
     color: var(--ink-soft);
+    white-space: pre-line;
+    word-break: keep-all;
 }
 
 .markdown-body h1,
@@ -725,11 +727,14 @@ form {
 .markdown-body h4 {
     font-weight: 900;
     color: var(--ink);
-    margin: 1.2rem 0 0.5rem;
+    margin: 1.3rem 0 0.6rem;
     letter-spacing: -0.2px;
 }
 
-.markdown-body p { margin-bottom: 0.85rem; }
+.markdown-body p {
+    margin-bottom: 1.25rem;
+    line-height: 1.85;
+}
 
 .markdown-body ul,
 .markdown-body ol {

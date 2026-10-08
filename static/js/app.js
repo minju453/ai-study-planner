@@ -189,10 +189,20 @@ document.addEventListener("DOMContentLoaded", () => {
         // 엔진 배지 표기
         engineBadge.textContent = response.model || "Gemini 3.5 Flash";
 
-        // 6대 섹션 마크다운 렌더링 (marked.js 활용)
+        // 6대 섹션 렌더링 (문단 분리 및 줄바꿈 가독성 극대화)
         const parseMd = (text) => {
             if (!text) return "<p>내용이 제공되지 않았습니다.</p>";
-            return typeof marked !== "undefined" ? marked.parse(text) : `<pre>${text}</pre>`;
+
+            if (typeof marked !== "undefined") {
+                marked.setOptions({ breaks: true, gfm: true });
+                return marked.parse(text);
+            }
+
+            // marked 미로딩 시 문단 단위 분리 렌더링
+            return text
+                .split(/\n\s*\n/)
+                .map(para => `<p>${para.replace(/\n/g, "<br>")}</p>`)
+                .join("");
         };
 
         secWeeklyPlan.innerHTML = parseMd(data.weekly_plan);

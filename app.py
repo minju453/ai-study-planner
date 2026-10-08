@@ -127,45 +127,50 @@ def call_gemini_planner(goal, exam_date, current_level, daily_time, weakness, pr
 [작성 요청사항 - 매우 중요]
 반드시 다음 6개 핵심 섹션을 완성도 높고 깔끔하게 작성하여 유효한 JSON으로 응답해 주세요.
 
-[금지 규칙: Do not use markdown headers or bullet points inside string values]
-- 문자열 값 내부에서 마크다운 헤더(#, ##, ###)를 일절 사용하지 마세요. 소제목은 [1주차: 핵심 목표], [오전 루틴] 등 대괄호 표기만 사용하세요.
-- 문자열 값 내부에서 불릿 포인트(-, *, +)를 일절 사용하지 마세요. 목록이나 항목 구분은 기호 없이 줄바꿈과 텍스트 레이블(학습 범위:, 실행 과제:, 목표치:)로 작성하세요.
+[문단 구분 및 가독성 필수 규칙 - 절대 하나로 뭉쳐 쓰지 마세요]
+- 하나로 길게 이어서 쓰지 말고, 각 주차 사이, 각 시간대 루틴 사이, 각 퀴즈 문항 사이에는 반드시 빈 줄(줄바꿈 2번)을 넣어 문단을 시원시원하게 나누세요.
+- 소제목 아래 각 항목(학습 범위, 실행 과제, 주간 목표치 등)도 줄바꿈으로 명확히 구분하세요.
 
 필수 JSON 키 및 작성 형식:
-1. "weekly_plan": 시험일까지의 주차별 학습 로드맵
+1. "weekly_plan": 시험일까지의 주차별 학습 로드맵 (주차마다 빈 줄로 문단 분리)
    [1주차: 핵심 테마 및 목표]
    학습 범위: 구체적인 단원 및 이론 범위
    실행 과제: 개념 정독 및 기본 예제 풀이
    주간 목표치: 주말 기준 달성 성취 기준
-   
+
    [2주차: 심화 및 기출 정복]
    학습 범위: 기출 빈출 유형 및 취약 파트 집중 공략
    실행 과제: 회차별 기출문제 풀이 및 오답노트
    주간 목표치: 모의고사 목표 점수 달성
 
-2. "daily_plan": 하루 일과 시간대별(오전/오후/저녁) 루틴 및 타임테이블
-3. "review_cycle": 에빙하우스 망각곡선 기반 복습 주기표(당일 10분, 3일 후 30분, 7일 후 누적 정리 등)
-4. "quiz_items": 개념 확인 및 취약점 셀프 점검 퀴즈 3~5문항과 정답/해설
+2. "daily_plan": 하루 일과 시간대별(오전/오후/저녁) 루틴 및 타임테이블 (시간대마다 빈 줄로 문단 분리)
+3. "review_cycle": 에빙하우스 망각곡선 기반 복습 주기표 (주기마다 빈 줄로 문단 분리)
+4. "quiz_items": 개념 확인 및 취약점 셀프 점검 퀴즈 3~5문항과 정답/해설 (문항마다 빈 줄로 문단 분리)
 5. "checklist": 단계별 체크리스트 배열 (["1주차 기본 개념 완독", "핵심 기출 3개년 풀이", "오답노트 1회독", ...])
-6. "retrospective_guide": KPT(Keep/Problem/Try) 프레임워크 기반 일일/주간 학습 회고 가이드
+6. "retrospective_guide": KPT(Keep/Problem/Try) 프레임워크 기반 일일/주간 학습 회고 가이드 (영역마다 빈 줄로 문단 분리)
 """
 
     def clean_text_no_headers_no_bullets(text):
-        """문자열 값 내부의 마크다운 헤더(#) 및 불릿 포인트(-, *, +) 제거"""
+        """문자열 값 내부의 마크다운 헤더(#) 및 불릿 포인트(-, *, +) 제거 및 가독성을 위한 문단 빈 줄 보장"""
         if not isinstance(text, str):
             return text
+        import re
         lines = text.splitlines()
         cleaned_lines = []
         for line in lines:
             stripped = line.strip()
+            if not stripped:
+                cleaned_lines.append("")
+                continue
             # 헤더(#, ##, ### 등) 제거
             if stripped.startswith("#"):
-                import re
                 stripped = re.sub(r"^#+\s*", "", stripped)
             # 불릿 포인트(-, *, +) 제거
-            import re
             if re.match(r"^[-*+]\s+", stripped):
                 stripped = re.sub(r"^[-*+]\s+", "", stripped)
+            # [대괄호 라벨] 소제목 앞에는 빈 줄을 두어 문단을 확실하게 분리
+            if stripped.startswith("[") and cleaned_lines and cleaned_lines[-1] != "":
+                cleaned_lines.append("")
             cleaned_lines.append(stripped)
         return "\n".join(cleaned_lines)
 
